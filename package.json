@@ -1,0 +1,22 @@
+{
+  "name": "spacetest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MathisBullinger/spacetest.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MathisBullinger/spacetest/issues"
+  },
+  "homepage": "https://github.com/MathisBullinger/spacetest#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4"
+  }
+}
