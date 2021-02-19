@@ -1,3 +1,5 @@
+import primes from '../data/primes.json'
+
 const canvas = document.querySelector<HTMLCanvasElement>('canvas')
 const ctx = canvas.getContext('2d')
 
@@ -6,9 +8,9 @@ setSize()
 function render() {
   ctx.fillStyle = "#111"
   ctx.fillRect(0, 0, canvas.width, canvas.height)
-  renderAxes()
+  // renderAxes()
   ctx.fillStyle = "#ff06"
-  for (let i = 1; i < 10000; i++) renderNum(i)
+  for (const n of primes) renderNum(n)
 }
 
 let scale = 1
