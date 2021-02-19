@@ -2,6 +2,7 @@ import {primes as genPrimes} from './utils/math'
 
 let limit = parseInt(new URLSearchParams(document.location.search).get('limit'))
 const primes = genPrimes(isNaN(limit) ? 1e5 : limit)
+if (isNaN(limit)) history.pushState(null, document.title, `?limit=${1e5}`)
 
 const canvas = document.querySelector<HTMLCanvasElement>('canvas')
 const ctx = canvas.getContext('2d')
