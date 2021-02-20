@@ -1,22 +1,20 @@
 {
-  "name": "spacetest",
+  "name": "primes",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MathisBullinger/spacetest.git"
+    "url": "git+https://github.com/MathisBullinger/primes.git"
   },
-  "author": "",
+  "author": "Mathis Bullinger",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/MathisBullinger/spacetest/issues"
+    "url": "https://github.com/MathisBullinger/primes/issues"
   },
-  "homepage": "https://github.com/MathisBullinger/spacetest#readme",
+  "homepage": "https://github.com/MathisBullinger/primes#readme",
   "devDependencies": {
     "parcel-bundler": "^1.12.4",
     "typescript": "^4.1.5"

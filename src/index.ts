@@ -1,4 +1,4 @@
-import { primes, range, squareCoord } from './utils/math'
+import { primes, squareCoord } from './utils/math'
 
 const params = new URLSearchParams(document.location.search)
 let limit = parseInt(params.get('limit'))
@@ -9,6 +9,7 @@ if (isNaN(limit)) {
 }
 
 const ulam = params.get('type') === 'ulam'
+const sacks = params.get('type') === 'sacks'
 
 const canvas = document.querySelector<HTMLCanvasElement>('canvas')
 const ctx = canvas.getContext('2d')
@@ -24,7 +25,7 @@ function render() {
 
 let scale = 1
 
-const pts: Record<number, [x: number, y: number]> = {}
+const pts: Record<number, [x: number, y: number, r: number]> = {}
 
 if (ulam) {
   const coord = squareCoord()
@@ -32,21 +33,25 @@ if (ulam) {
   for (let i = 0; i <= set[set.length - 1]; i++) {
     if (i < set[pi]) coord.next()
     else {
-      pts[i] = coord.next().value
+      pts[i] = [...coord.next().value, 10] as any
       pi++
     }
   }
 }
+else if (sacks) {
+  for (const n of set) {
+    const r = Math.sqrt(n)
+    pts[n] = [Math.sin(2 * Math.PI * r), Math.cos(2 * Math.PI * r), r * 5]
+  }
+}
 else
-  for (const n of set) pts[n] = [Math.sin(n), Math.cos(n)]
+  for (const n of set) pts[n] = [Math.sin(n), Math.cos(n), n]
 
-const ds = devicePixelRatio * 1
+const ds = devicePixelRatio
 
 function renderNum(num: number) {
-  const dist = ulam ? 10 * scale : num * scale
-  const x = pts[num][0] * dist
-  const y = pts[num][1] * dist
-
+  const x = pts[num][0] * pts[num][2] * scale
+  const y = pts[num][1] * pts[num][2] * scale
   ctx.fillRect(canvas.width / 2 + x - ds, canvas.height / 2 + y - ds, ds * 2, ds * 2)
 }
 
