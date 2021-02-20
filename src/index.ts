@@ -67,7 +67,8 @@ window.addEventListener('resize', () => {
   render()
 })
 
-canvas.addEventListener('wheel', ({ deltaY: y }) => {
+canvas.addEventListener('wheel', ({ deltaY: y, deltaMode, DOM_DELTA_LINE }) => {
+  if (deltaMode === DOM_DELTA_LINE) y *= 20
   scale *= (1 - y / 1000)
   render()
 }, { passive: true })
