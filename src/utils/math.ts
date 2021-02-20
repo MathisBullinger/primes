@@ -1,7 +1,8 @@
 export function primes(max, min = 2): number[] {
   const nums = new Set(range(min, max))
 
-  for (let i = 2; i < max; i++) {
+  for (let i = 2; i <= Math.sqrt(max); i++) {
+    if (!nums.has(i)) continue
     for (let m = i ** 2; m < max; m += i)
       nums.delete(m)
   }
