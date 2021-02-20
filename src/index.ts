@@ -1,8 +1,14 @@
-import {primes as genPrimes} from './utils/math'
+import { primes, range, squareCoord } from './utils/math'
 
-let limit = parseInt(new URLSearchParams(document.location.search).get('limit'))
-const primes = genPrimes(isNaN(limit) ? 1e5 : limit)
-if (isNaN(limit)) history.pushState(null, document.title, `?limit=${1e5}`)
+const params = new URLSearchParams(document.location.search)
+let limit = parseInt(params.get('limit'))
+const set = primes(isNaN(limit) ? 1e5 : limit)
+if (isNaN(limit)) {
+  params.append('limit', 1e5.toString())
+  history.pushState(null, document.title, `?${params.toString()}`)
+}
+
+const ulam = params.get('type') === 'ulam'
 
 const canvas = document.querySelector<HTMLCanvasElement>('canvas')
 const ctx = canvas.getContext('2d')
@@ -13,18 +19,31 @@ function render() {
   ctx.fillStyle = "#111"
   ctx.fillRect(0, 0, canvas.width, canvas.height)
   ctx.fillStyle = "#ff0a"
-  for (const n of primes) renderNum(n)
+  for (const n of set) renderNum(n)
 }
 
 let scale = 1
 
 const pts: Record<number, [x: number, y: number]> = {}
-for (const n of primes) pts[n] = [Math.sin(n), Math.cos(n)]
+
+if (ulam) {
+  const coord = squareCoord()
+  let pi = 0
+  for (let i = 0; i <= set[set.length - 1]; i++) {
+    if (i < set[pi]) coord.next()
+    else {
+      pts[i] = coord.next().value
+      pi++
+    }
+  }
+}
+else
+  for (const n of set) pts[n] = [Math.sin(n), Math.cos(n)]
 
 const ds = devicePixelRatio * 1
 
 function renderNum(num: number) {
-  const dist = num * scale
+  const dist = ulam ? 10 * scale : num * scale
   const x = pts[num][0] * dist
   const y = pts[num][1] * dist
 
